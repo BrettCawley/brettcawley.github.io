@@ -1,4 +1,4 @@
-This tutorial is heavily influenced by https://dev.lightning.community/guides/installation/
+This tutorial is heavily influenced by [https://dev.lightning.community/guides/installation/](https://dev.lightning.community/guides/installation/)
 I found it confusing to install being a windows user so here is the quick version!
 
 ### Download tools
@@ -22,11 +22,13 @@ Run the following command to ensure go correctly added `C:\Users\<YOUR_USER>\go\
 btcd is the bitcoin daemon that provides information about the blockchain to lnd, so run the following to install.
 
     
-    go get -u github.com/Masterminds/glidegit
-    clone https://github.com/btcsuite/btcd $GOPATH/src/github.com/btcsuite/btcd
-    cd $GOPATH/src/github.com/btcsuite/btcd
-    glide install
-    go install . ./cmd/...
+```
+go get -u github.com/Masterminds/glidegit
+clone https://github.com/btcsuite/btcd $GOPATH/src/github.com/btcsuite/btcd
+cd $GOPATH/src/github.com/btcsuite/btcd
+glide install
+go install . ./cmd/...
+```
 
 Run `btcd --help` to test it works.
 
