@@ -1,4 +1,4 @@
-This tutorial is heavily influenced by https://dev.lightning.community/guides/installation/,
+This tutorial is heavily influenced by https://dev.lightning.community/guides/installation/
 I found it confusing to install being a windows user so here is the quick version!
 
 ### Download tools
@@ -9,35 +9,33 @@ I found it confusing to install being a windows user so here is the quick versio
 
 ### Setup Tools
 We use `dep` to manage dependencies, so open up a new cygwin terminal and run the following: Wait for it to finish installing.
-```
-go get -u github.com/golang/dep/cmd/dep
-```
+    
+    go get -u github.com/golang/dep/cmd/dep
 
 
 In order to build from source, we need to make sure the correct windows environment variables were added when go was installed.
 Run the following command to ensure go correctly added `C:\Users\<YOUR_USER>\go\bin` to *%PATH%*, and it can see that *dep* was just installed.
- ```dep --help```
+
+    dep --help
 
 ### Install btcd
 btcd is the bitcoin daemon that provides information about the blockchain to lnd, so run the following to install.
 
-```
-go get -u github.com/Masterminds/glidegit
-clone https://github.com/btcsuite/btcd $GOPATH/src/github.com/btcsuite/btcd
-cd $GOPATH/src/github.com/btcsuite/btcd
-glide install
-go install . ./cmd/...
-```
+    
+    go get -u github.com/Masterminds/glidegit
+    clone https://github.com/btcsuite/btcd $GOPATH/src/github.com/btcsuite/btcd
+    cd $GOPATH/src/github.com/btcsuite/btcd
+    glide install
+    go install . ./cmd/...
 
 Run `btcd --help` to test it works.
 
 ### Install lnd
 Now we need to install lnd from source, so lets get the latest code and install
-```
-go get -d github.com/lightningnetwork/lnd
-cd $GOPATH/src/github.com/lightningnetwork/lnd
-make && make install
-```
+
+    go get -d github.com/lightningnetwork/lnd
+    cd $GOPATH/src/github.com/lightningnetwork/lnd
+    make && make install
 
 Run `lnd --help` to test it works.
 
