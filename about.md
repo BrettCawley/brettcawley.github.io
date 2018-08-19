@@ -4,12 +4,8 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
-
-### More Information
-
-A place to include any other types of information that you'd like to include about yourself.
+Irish Developer based in Copenhagen. My 3 Favourite things in the world are Guinness, Potatoes, and Stereotypes
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+firstnamelastname at hotmail.com
