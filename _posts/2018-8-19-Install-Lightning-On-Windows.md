@@ -22,12 +22,17 @@ Run the following command to ensure go correctly added `C:\Users\<YOUR_USER>\go\
 btcd is the bitcoin daemon that provides information about the blockchain to lnd, so run the following to install.
 
     
-```
+```sh
 go get -u github.com/Masterminds/glidegit
 clone https://github.com/btcsuite/btcd $GOPATH/src/github.com/btcsuite/btcd
 cd $GOPATH/src/github.com/btcsuite/btcd
 glide install
 go install . ./cmd/...
+```
+
+```javascript
+/* Some pointless Javascript */
+var rawr = ["r", "a", "w", "r"];
 ```
 
 Run `btcd --help` to test it works.
