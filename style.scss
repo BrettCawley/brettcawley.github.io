@@ -123,11 +123,11 @@ img {
 // Specify the color of the selection
 ::-moz-selection {
   color: $black;
-  background: $blue;
+  background: $lightGray;
 }
 ::selection {
   color: $black;
-  background: $blue;
+  background: $lightGray;
 }
 
 // Nicolas Gallagher's micro clearfix hack
@@ -282,6 +282,35 @@ footer {
   padding: 20px 0;
   text-align: center;
 }
+
+
+
+/////
+//
+// Brett's Overrides
+//
+/////
+
+::-moz-selection {
+  color: $black;
+  background: #ACCEF7;
+}
+::selection {
+  color: $black;
+  background: #ACCEF7;
+}
+
+pre .highlight {
+  box-shadow: none;
+  margin: 0;
+  border: 0;	
+}
+
+code .highlighter-rouge {
+  background: $lightGray;
+  padding: 4px;
+}
+
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
