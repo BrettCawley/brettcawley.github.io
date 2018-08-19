@@ -1,5 +1,4 @@
-This tutorial is heavily influenced by [https://dev.lightning.community/guides/installation/](https://dev.lightning.community/guides/installation/)
-I found it confusing to install being a windows user so here is the quick version!
+This tutorial is heavily influenced by [dev.lightning.community/guides/installation/](https://dev.lightning.community/guides/installation/). I found it confusing to install being a windows user so here is the quick version!
 
 ### Download tools
 * [Install git for windows](https://git-scm.com/download/win) and accept all defaults. Go needs git to pull source code from github. 
@@ -12,7 +11,6 @@ We use `dep` to manage dependencies, so open up a new cygwin terminal and run th
     
     go get -u github.com/golang/dep/cmd/dep
 
-
 In order to build from source, we need to make sure the correct windows environment variables were added when go was installed.
 Run the following command to ensure go correctly added `C:\Users\<YOUR_USER>\go\bin` to *%PATH%*, and it can see that *dep* was just installed.
 
@@ -21,19 +19,11 @@ Run the following command to ensure go correctly added `C:\Users\<YOUR_USER>\go\
 ### Install btcd
 btcd is the bitcoin daemon that provides information about the blockchain to lnd, so run the following to install.
 
-    
-```sh
-go get -u github.com/Masterminds/glidegit
-clone https://github.com/btcsuite/btcd $GOPATH/src/github.com/btcsuite/btcd
-cd $GOPATH/src/github.com/btcsuite/btcd
-glide install
-go install . ./cmd/...
-```
-
-```javascript
-/* Some pointless Javascript */
-var rawr = ["r", "a", "w", "r"];
-```
+    go get -u github.com/Masterminds/glidegit
+    clone https://github.com/btcsuite/btcd $GOPATH/src/github.com/btcsuite/btcd
+    cd $GOPATH/src/github.com/btcsuite/btcd
+    glide install
+    go install . ./cmd/...
 
 Run `btcd --help` to test it works.
 
