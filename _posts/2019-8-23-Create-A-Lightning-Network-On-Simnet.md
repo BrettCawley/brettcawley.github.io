@@ -1,9 +1,9 @@
-This tutorial is heavily influenced by [dev.lightning.community/tutorial/01-lncli/index](https://dev.lightning.community/tutorial/01-lncli/index.html). I suggest you read over this first to get a quick overview, as i will be skipping a lot of the background information in order to keep this short
+This tutorial is heavily influenced by [dev.lightning.community/tutorial/01-lncli/](https://dev.lightning.community/tutorial/01-lncli/index.html). I suggest you read over this first to get a quick overview, as i will be skipping a lot of the background information in order to keep this short
 
-This assumes you have a functioning `lnd` and `btcd` install from the previous turorial HERE.
-In this tutorial, we're going to create a local lightning network(simnet), and route payments using 3 nodes:  `alice`, `bob`, and `charlie`.
+This assumes you have a functioning `lnd` and `btcd` install from the previous turorial [here](/Install-Lightning-On-Windows/).
+In this tutorial, we're going to create a local lightning network (on simnet), and route payments using 3 nodes:  `alice`, `bob`, and `charlie`.
 
-But first, we''l need to run our bitcoin node, so open powershell (yes powershell) and run the following.
+But first, we''l need to run our bitcoin node, so open powershell (yes powershell) and run the following:
 
     btcd --txindex --simnet --rpcuser=kek --rpcpass=kek
 
@@ -30,7 +30,7 @@ You’ll be asked to input a wallet password for `alice`, which must be longer t
     cd $Env:GOPATH/dev/alice
     lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon create
 
-You should have receieved a success message, Good Stuff! (Note that the next time you want to access the node, you will need to replace `create`, with `unlock`).
+You should have receieved a success message, Good Stuff! (Note that the next time you want to access the encrypted `lnd` node, you will need to replace `create`, with `unlock`).
 
  You can test it out by running: 
  
@@ -38,7 +38,7 @@ You should have receieved a success message, Good Stuff! (Note that the next tim
 
 
 ###  What about Bob & Charlie?
-We'll have to do the same for them too, soo many terminals! Notice in the following we are using different ports in many of the commands
+We'll have to do the same for them too, soo many terminals! Notice in the following we are using different ports in many of the commands.
 
  Open up a terminal and run `lnd` for `bob`
 
@@ -95,11 +95,11 @@ Great! We've now got addresses `<ALICE_ADDRESS>`, `<BOB_ADDRESS>`, and `<CHARLIE
 
 ##### Create Bitcoin for users
 We need to create bitcoin for our users in order to use them on the lightning network. To do that, we need to configure `btcd` to point to a bitcoin address.
-So in the terminal that `btcd` is currently running, cancel the process by pressing `Ctrl+C` a couple times. Now re-run `btcd` while replacing `<ALICE_ADDRESS>` with  `alice`'s address generated in the previous step:
+In the terminal that `btcd` is currently running, cancel the process by pressing `Ctrl+C` a couple times. Now re-run `btcd` while replacing `<ALICE_ADDRESS>` with  `alice`'s address generated in the previous step:
      
     btcd --simnet --txindex --rpcuser=kek --rpcpass=kek --miningaddr=<ALICE_ADDRESS>
 
-We now need to generate 400 simnet blocks, which sends the mining reward to `alice`. We generate 400 because coinbase funds can’t be spent until after 100 confirmations, and we need about 300 to activate segwit. 
+We now need to generate 400 simnet blocks, of which the mining rewards will be sent to `alice`. We generate 400 blocks because coinbase funds can’t be spent until after 100 confirmations, and we need about 300 to activate segwit. 
 
 Open a new terminal (our 8th!) and mine the blocks, thereafter we check `alices`'s balance using `lncli ... walletbalance` to confirm it worked:
 
@@ -130,9 +130,3 @@ Now that Alice and Charlie have some simnet Bitcoin, let’s start connecting th
 
 *to be continued.....*
 
-
-
-#### fixing wallet generation problem
-go to the terminal running the users lnd eg alices lnd
-ctrl c a cpuople times
-up to get latest command
