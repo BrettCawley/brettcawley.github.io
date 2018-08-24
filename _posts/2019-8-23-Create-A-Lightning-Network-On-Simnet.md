@@ -17,7 +17,7 @@ We'll need to run `btcd` to interact with the blockchain, so in the same powersh
     btcd --txindex --simnet --rpcuser=kek --rpcpass=kek
 
 ### Creating Our Ligning Nodes
-[](/#CreateLightningNode)
+[](#CreateLightningNode)
 
 Let's now run `alice`'s ligtning node. After you run the following, it will wait for you to decrypt the wallet using a password. We'll do that in the next step, but for now run this command in a new powershell terminal:
  
@@ -112,7 +112,7 @@ Open a new terminal (our 8th!) and mine the blocks, thereafter we check `alices`
 
 and close the terminal.
 
->Is the wallet balance reporting as 0, even though the command ran successfully? If not, great! ignore the rest of this message. If so, perhaps try restarting then unlocking lnd. Find alice's lnd terminal, cancel it (Ctrl+C), Then restart back up at the ["**Creating Our Lightning Nodes**"](/#CreateLightningNode) section. In the subsequent step, unlock lnd by calling lncli using the **unlock** argument, not create. After successfully unlocking, come back here and try the wallet balance command again. If it still doesn't work, try to investigate using the getinfo command mentioned earlier.
+>Is the wallet balance reporting as 0, even though the command ran successfully? If not, great! ignore the rest of this message. If so, perhaps try restarting then unlocking lnd. Find alice's lnd terminal, cancel it (Ctrl+C), Then restart back up at the ["**Creating Our Lightning Nodes**"](#CreateLightningNode) section. In the subsequent step, unlock lnd by calling lncli using the **unlock** argument, not create. After successfully unlocking, come back here and try the wallet balance command again. If it still doesn't work, try to investigate using the getinfo command mentioned earlier.
 
 Lets do the same for `charlie` now. Find the terminal running `btcd`, cancel it by pressing `Ctrl+C` a couple of times, and set it to mine to `<CHARLIE_ADDRESS>`:
     
