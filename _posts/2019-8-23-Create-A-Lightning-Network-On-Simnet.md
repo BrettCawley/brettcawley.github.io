@@ -1,7 +1,7 @@
 This tutorial is heavily influenced by [dev.lightning.community/tutorial/01-lncli/](https://dev.lightning.community/tutorial/01-lncli/index.html). I suggest you read over this first to get a quick overview, as I will be skipping a lot of the background information in order to keep this short.
 
 This assumes you have a functioning `lnd` and `btcd` install from the previous turorial [here](/Install-Lightning-On-Windows/).
-In this tutorial, we're going to create a local lightning network (on simnet), and route payments using 3 nodes:  `alice`, `bob`, and `charlie`. So lets start by creating directories for our users. Open powershell (yes powershell) and run the following:
+In this tutorial, we're going to create a local lightning network (on simnet), and route payments using 3 nodes:  `alice`, `bob`, and `charlie`. So let's start by creating directories for our users. Open powershell (yes powershell) and run the following:
 
     cd $Env:GOPATH
     mkdir dev
@@ -19,12 +19,12 @@ We'll need to run `btcd` to interact with the blockchain, so in the same powersh
 ### Creating Our Ligning Nodes
 [](/#CreateLightningNode)
 
-Lets now run `alice`'s ligtning node. After you run the following, it will wait for you to decrypt the wallet using a password. We'll do that later, but for now run this command in a new powershell terminal:
+Let's now run `alice`'s ligtning node. After you run the following, it will wait for you to decrypt the wallet using a password. We'll do that in the next step, but for now run this command in a new powershell terminal:
  
     lnd --rpclisten=localhost:10001 --listen=localhost:10011 --restlisten=localhost:8001 --datadir=data --logdir=log --debuglevel=info --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek 
 
 ### Interacting using command line
-To interact with `alice`'s node, we will need to unlock the node using the `lncli` tool. `lnd` uses [macaroons](https://ai.google/research/pubs/pub41892) as authentication, and you'll notice we supply the path to our macroons directory.
+To interact with `alice`'s node, we will need to unlock the node using the `lncli` tool. `lnd` uses [macaroons](https://ai.google/research/pubs/pub41892) as authentication, and you'll notice we supply the path to our macroons directory in the command above.
 
 You’ll be asked to input a wallet password for `alice`, which must be longer than 8 characters. You also have the option to add a passphrase to your cipher seed. For now, just skip this step by entering “n” when prompted about whether you have an existing mnemonic, and pressing enter to proceed without the passphrase.
 Run the following in a new terminal:
@@ -38,34 +38,34 @@ You should have receieved a success message, Good Stuff! (Note that the next tim
  
     lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon getinfo
 
-In fact, if something doesn't seem to work as expected, remember this command, and investigate the isssue.
+In fact, if something doesn't seem to work as expected, remember this command (remember to use the correct port), and investigate the issue.
 
 ###  What about Bob & Charlie?
 We'll have to do the same for them too, 4 more terminals! Notice in the following we are using different ports in many of the commands.
 
- Open up a terminal and run `lnd` for `bob`
+ Open up a terminal and run `lnd` for `bob`:
 
     cd $Env:GOPATH/dev/bob
     lnd --rpclisten=localhost:10002 --listen=localhost:10012 --restlisten=localhost:8002 --datadir=data --logdir=log --debuglevel=info --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek 
 
-and an `lncli` for `bob` in a new terminal
+and an `lncli` for `bob` in a new terminal:
 
     cd $Env:GOPATH/dev/bob
     lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon create
 
 
-`charlie` needs an `lnd` in a new terminal
+`charlie` needs an `lnd` in a new terminal:
 
     cd $Env:GOPATH/dev/charlie
     lnd --rpclisten=localhost:10003 --listen=localhost:10013 --restlisten=localhost:8003 --datadir=data --logdir=log --debuglevel=info --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek 
 
-and an `lncli` for `charlie` in a new terminal
+and an `lncli` for `charlie` in a new terminal:
 
     cd $Env:GOPATH/dev/charlie
     lncli --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon create
 
 
-Time for a break? I think so, get a coffee and come back in a couple minutes.
+Time for a break? I think so, get a coffee and come back in a couple minutes. In the next section we're going to generate some bitcoin.
 
 ### Funding Users
 Hopefully you've come back a llittle refreshed, because now we're going to generate some simnet bitcoins to send around!
@@ -82,7 +82,7 @@ First we need to create bitcoin addresses (np2wkh) for our 3 users. The result o
 
 
 
- So lets do it for our 3 users. Find the terminal we previously used `lncli` for `alice` and run `newaddress np2wkh`:
+ So let's do it for our 3 users. Find the terminal we previously used `lncli` for `alice` and run `newaddress np2wkh`:
 
     lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon newaddress np2wkh
 
@@ -97,7 +97,7 @@ and finally `newaddress np2wkh` in `charlie`'s `lncli` terminal:
 Great! We've now got addresses `<ALICE_ADDRESS>`, `<BOB_ADDRESS>`, and `<CHARLIE_ADDRESS>` in our terminals, we'll use them in the next step: Generating simnet bitcoin.
 
 ##### Create Bitcoin for users
-We need to create bitcoin for our users in order to use them on the lightning network. To do that, we need to configure `btcd` to point to a bitcoin address.
+We need to create bitcoin for our users in order to use them on the lightning network. To do that, we need to configure `btcd` to point to a block reward bitcoin address.
 In the terminal that `btcd` is currently running, cancel the process by pressing `Ctrl+C` a couple times. Now re-run `btcd` while replacing `<ALICE_ADDRESS>` with  `alice`'s address generated in the previous step:
      
     btcd --simnet --txindex --rpcuser=kek --rpcpass=kek --miningaddr=<ALICE_ADDRESS>
@@ -112,7 +112,7 @@ Open a new terminal (our 8th!) and mine the blocks, thereafter we check `alices`
 
 and close the terminal.
 
->Is the wallet balance reporting as 0, even though the command ran successfully? If not, great! ignore the rest of this message. If so, perhaps try restarting lnd. Find alice's lnd terminal, cancel it (Ctrl+C), Then restart back up at the ["**Creating the Lightning Node**"](/#CreateLightningNode) section and repeat the steps, but call lncli using the **unlock** argument, not create. After successfully unlocking, come back here and try the wallet balance command again.
+>Is the wallet balance reporting as 0, even though the command ran successfully? If not, great! ignore the rest of this message. If so, perhaps try restarting then unlocking lnd. Find alice's lnd terminal, cancel it (Ctrl+C), Then restart back up at the ["**Creating Our Lightning Nodes**"](/#CreateLightningNode) section. In the subsequent step, unlock lnd by calling lncli using the **unlock** argument, not create. After successfully unlocking, come back here and try the wallet balance command again. If it still doesn't work, try to investigate using the getinfo command mentioned earlier.
 
 Lets do the same for `charlie` now. Find the terminal running `btcd`, cancel it by pressing `Ctrl+C` a couple of times, and set it to mine to `<CHARLIE_ADDRESS>`:
     
