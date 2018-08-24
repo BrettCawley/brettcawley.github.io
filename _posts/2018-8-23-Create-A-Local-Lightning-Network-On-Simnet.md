@@ -19,7 +19,7 @@ We'll need to run `btcd` to interact with the blockchain, so in the same powersh
 
     btcd --txindex --simnet --rpcuser=kek --rpcpass=kek
 
-### Creating Our Ligning Nodes  <a name="Create-Lightning-Node" />
+### Creating Our Lightning Nodes  <a name="Create-Lightning-Node" />
 
 Let's now run `alice`'s lightning node. After you run the following, it will wait for you to decrypt the wallet using a password. We'll do that in the next step, but for now run this command in a new powershell terminal:
  
@@ -68,12 +68,12 @@ and an `lncli` for `charlie` in a new terminal:
 
 
 ### Funding Users
-Now we're going to generate some simnet bitcoins to send around!
+Now we're going to generate some simnet Bitcoin to send around!
 At this point we have 7 terminals running, so get ready to switch pretty often!
 
 #### Creating Bitcoin Addresses
 
-First we need to create bitcoin addresses (np2wkh) for our 3 users. The result of the `lncli ... newaddress np2wkh` command will look like the following. Alice is given as an example:
+First we need to create Bitcoin addresses (np2wkh) for our 3 users. The result of the `lncli ... newaddress np2wkh` command will look like the following. Alice is given as an example:
     
     ### output of "$dev/alice lncli ... newaddress np2wkh"
     {
@@ -97,7 +97,7 @@ and finally `newaddress np2wkh` in `charlie`'s `lncli` terminal:
 Great! We've now got addresses `<ALICE_ADDRESS>`, `<BOB_ADDRESS>`, and `<CHARLIE_ADDRESS>` in our terminals, we'll use them in the next step.
 
 #### Creating Bitcoin for Users
-We need to create bitcoin for our users in order to use them on the lightning network. To do that, we need to configure `btcd` to point to a block reward bitcoin address.
+We need to create Bitcoin for our users in order to use them on the lightning network. To do that, we need to configure `btcd` to point to a block reward Bitcoin address.
 In the terminal that `btcd` is currently running, cancel the process by pressing `Ctrl+C` a couple times. Now re-run `btcd` while replacing `<ALICE_ADDRESS>` with  `alice`'s address generated in the previous step:
      
     btcd --simnet --txindex --rpcuser=kek --rpcpass=kek --miningaddr=<ALICE_ADDRESS>
@@ -126,14 +126,14 @@ Open a new terminal, generate 100 blocks for `charlie`, and check his balance:
 
 
 And close the terminal.
-Now we have users with bitcoin, we can proceed to the next step: connecting the users' lightning nodes! We're half way through the tutorial now, and here's a good place to take a break if necessary.
+Now that we have users with Bitcoin, we can proceed to the next step: connecting the users' lightning nodes! We're half way through the tutorial now, and here's a good place to take a break if necessary.
 
 ### Creating the Network
-In the first half, we created lighning nodes, bitcoin addresses, and bitcoin for our users.
+In the first half of the tutorial we created lightning nodes, Bitcoin addresses, and Bitcoin for our users.
 
-Now we're going to open payment channels between them, and send single-hop and multi-hop payments.
+Now we're going to open payment channels between them in order to send single and multi-hop payments.
 
-First, let's connect `alice` to `bob`. We'll need to find `bob`'s "identity_pubkey" using `getinfo`. So find `bob`'s `lncli` terminal and run the following, and make note of the value of `<BOB_PUBKEY>`
+First, let's connect `alice` to `bob`. We'll need to find `bob`'s "identity_pubkey" using `getinfo`. Find `bob`'s `lncli` terminal and run the following, making note of the value of `<BOB_PUBKEY>`
 
     lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon getinfo
     ### output ->
@@ -154,7 +154,7 @@ Finally, let's do the same and connect `charlie` to `bob`. Find `charlie`'s `lnc
     lncli --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon connect <BOB_PUBKEY>@localhost:10012
 
 #### Opening Payment Channels
-Before we can send bitcoin across the network, we need to open payment channels between users using `openchannel`.
+Before we can send Bitcoin across the network, we need to open payment channels between users using `openchannel`.
 First, let's open `alice`<--->`bob`. Find `alice`'s `lncli` terminal and run the following:
 
     lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon openchannel --node_key=<BOB_PUBKEY> --local_amt=1000000
@@ -200,7 +200,7 @@ Let's now route a payment through `bob`, which is done exactly the same as above
     lncli --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon addinvoice --amt=10000
 
 
-Switch back to `alice`'s `lnd` and pay:
+Switch back to `alice`'s `lnd` terminal and pay:
 
     lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon sendpayment --pay_req=<encoded_invoice>
 
@@ -208,7 +208,7 @@ And check `alice`'s balance:
 
     lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon listchannels
 
-And We're done! We've successfully routed bitcoin on a local lighning network!
+And we're done! We've successfully routed Bitcoin on a local lightning network!
 
 ### Next Steps
-It may also be useful to learn to [close channels](https://api.lightning.community/#closechannel), but in the mean time hold tight until I write how to create a web app using lighning testnet.
+It may also be useful to learn to [close channels](https://api.lightning.community/#closechannel), but in the mean time hold tight until I write how to create a web app using lightning testnet.
