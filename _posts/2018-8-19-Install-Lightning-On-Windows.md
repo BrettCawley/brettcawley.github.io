@@ -40,4 +40,4 @@ Run `lnd --help` to test it works.
 
 ### Next Steps
 
-[Part 2](/Create-A-Local-Lightning-Network-On-Simnet) in this series of tutorials walks through creating a local lightning network using simnet. Check it out!
+[Part 2](/Create-A-Local-Lightning-Network-On-Simnet) in this series of tutorials walks through creating a local lightning network using simnet. You can also uninstall cygwin, we won't need it again.

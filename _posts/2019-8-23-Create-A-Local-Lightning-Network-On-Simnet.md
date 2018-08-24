@@ -19,7 +19,7 @@ We'll need to run `btcd` to interact with the blockchain, so in the same powersh
 
     btcd --txindex --simnet --rpcuser=kek --rpcpass=kek
 
-### Creating Our Ligning Nodes[.](#Create-Lightning-Node)
+### Creating Our Ligning Nodes  <a name="Create-Lightning-Node" />
 
 Let's now run `alice`'s lightning node. After you run the following, it will wait for you to decrypt the wallet using a password. We'll do that in the next step, but for now run this command in a new powershell terminal:
  
@@ -34,7 +34,7 @@ Run the following in a new terminal:
     cd $Env:GOPATH/dev/alice
     lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon create
 
-You should have receieved a success message, Good Stuff! (Note that the next time you want to access the encrypted `lnd` node, in the command above you will need to replace `create`, with `unlock`).
+You should have received a success message, Good Stuff! (Note that the next time you want to access the encrypted `lnd` node, in the command above you will need to replace `create`, with `unlock`).
 
  You can test it out by running: 
  
@@ -86,7 +86,7 @@ First we need to create bitcoin addresses (np2wkh) for our 3 users. The result o
 
     lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon newaddress np2wkh
 
-In the terminal we previously used`lncli` for `bob`, `newaddress np2wkh` once more:
+In the terminal we previously used `lncli` for `bob`, `newaddress np2wkh` once more:
 
     lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon newaddress np2wkh
 
@@ -131,9 +131,9 @@ Now we have users with bitcoin, we can proceed to the next step: connecting the 
 ### Creating the Network
 In the first half, we created lighning nodes, bitcoin addresses, and bitcoin for our users.
 
-Now we're going to open payment channels between them, and send single hop and multi hop payments.
+Now we're going to open payment channels between them, and send single-hop and multi-hop payments.
 
-First, let's connect `alice` to `bob`. We'll need to find `bob`'s identity pubkey using `getinfo`. So find `bob`'s `lncli` terminal and run the following, and make note of the value of `<BOB_PUBKEY>`
+First, let's connect `alice` to `bob`. We'll need to find `bob`'s "identity_pubkey" using `getinfo`. So find `bob`'s `lncli` terminal and run the following, and make note of the value of `<BOB_PUBKEY>`
 
     lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon getinfo
     ### output ->
