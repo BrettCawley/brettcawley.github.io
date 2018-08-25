@@ -8,12 +8,9 @@ This assumes you have a functioning `lnd` and `btcd` install from the previous t
 
     cd $Env:GOPATH
     mkdir dev
-    cd dev
-    mkdir alice
-    mkdir bob
-    mkdir charlie
-    cd alice
-
+    mkdir dev/alice
+    mkdir dev/bob
+    mkdir dev/charlie
 
 We'll need to run `btcd` to interact with the blockchain, so in the same powershell terminal run:
 
@@ -23,6 +20,7 @@ We'll need to run `btcd` to interact with the blockchain, so in the same powersh
 
 Let's now run `alice`'s lightning node. After you run the following, it will wait for you to decrypt the wallet using a password. We'll do that in the next step, but for now run this command in a new powershell terminal:
  
+    cd $Env:GOPATH/dev/alice
     lnd --rpclisten=localhost:10001 --listen=localhost:10011 --restlisten=localhost:8001 --datadir=data --logdir=log --debuglevel=info --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek 
 
 #### Interacting using Command Line
@@ -36,11 +34,11 @@ Run the following in a new terminal:
 
 You should have received a success message, Good Stuff! (Note that the next time you want to access the encrypted `lnd` node, in the command above you will need to replace `create`, with `unlock`).
 
- You can test it out by running: 
+ You can test it out by using `getinfo`: 
  
     lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon getinfo
 
-In fact, if something doesn't seem to work as expected, remember this command (and to use the correct port), and investigate the issue.
+In fact, if something doesn't seem to work as expected, remember `getinfo` (and the correct port), and investigate the issue.
 
 ####  What about Bob & Charlie?
 We'll have to do the same for them too, so 4 more terminals! Notice in the following we are using different ports for each user.
@@ -171,7 +169,7 @@ We now need to mine 6 blocks to confirm the channels, so open a new terminal and
 
 And close terminal.
     
-We're close to sending a payment, but first let's confirm `bob` can see `alice` and `charlie`: find `bob`'s `lncli` terminal and run:
+We're close to sending a payment, but first let's confirm `bob` can see `alice` and `charlie`. Find `bob`'s `lncli` terminal and use the `listchannels` arguement:
 
     lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon listchannels
 
