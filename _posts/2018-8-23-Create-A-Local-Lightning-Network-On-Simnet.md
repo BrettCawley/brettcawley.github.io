@@ -78,21 +78,15 @@ First we need to create Bitcoin addresses (np2wkh) for our 3 users. The result o
         "address": <ALICE_ADDRESS>
     }
 
-
-
- So let's do it for our 3 users. Find the terminal we previously used `lncli` for `alice` and run `newaddress np2wkh`:
+ So let's do it for `alice` and `charlie`. We're not going to create a Bitcoin address for `bob`, because `alice` will send him lightning funds in later steps, he doesn't need on chain coins. Find the terminal we previously used `lncli` for `alice` and run `newaddress np2wkh`:
 
     lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon newaddress np2wkh
 
-In the terminal we previously used `lncli` for `bob`, `newaddress np2wkh` once more:
-
-    lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon newaddress np2wkh
-
-and finally `newaddress np2wkh` in `charlie`'s `lncli` terminal:
+In the terminal we previously used `lncli` for `charlie`, `newaddress np2wkh` once more:
 
     lncli --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon newaddress np2wkh
 
-Great! We've now got addresses `<ALICE_ADDRESS>`, `<BOB_ADDRESS>`, and `<CHARLIE_ADDRESS>` in our terminals, we'll use them in the next step.
+Great! We've now got addresses `<ALICE_ADDRESS>` and `<CHARLIE_ADDRESS>` in our terminals, we'll use them in the next step.
 
 #### Creating Bitcoin for Users
 We need to create Bitcoin for our users in order to use them on the lightning network. To do that, we need to configure `btcd` to point to a block reward Bitcoin address.
@@ -209,4 +203,4 @@ And check `alice`'s balance:
 And we're done! We've successfully routed Bitcoin on a local lightning network!
 
 ### Next Steps
-It may also be useful to learn to [close channels](https://api.lightning.community/#closechannel), but in the mean time hold tight until I write how to create a web app using lightning testnet.
+It may also be useful to learn to [close channels](https://api.lightning.community/#closechannel), but in the mean time hold tight until I write how to create a web app using lightning simnet.
