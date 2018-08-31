@@ -71,7 +71,7 @@ At this point we have 7 terminals running, so get ready to switch pretty often!
 
 #### Creating Bitcoin Addresses
 
-First we need to create Bitcoin addresses (np2wkh) for our 3 users. The result of the `lncli ... newaddress np2wkh` command will look like the following. Alice is given as an example:
+First we need to create Bitcoin addresses (np2wkh) for our users. The result of the `lncli ... newaddress np2wkh` command will look like the following. Alice is given as an example:
     
     ### output of "$dev/alice lncli ... newaddress np2wkh"
     {
@@ -153,7 +153,7 @@ First, let's open `alice`<--->`bob`. Find `alice`'s `lncli` terminal and run the
 
 `--local_amt` specifies the amount of money that `alice` will commit to the channel.
 
-Lets's create `charlie`<--->`bob` now, and this time we're going to add the `--push_amt` argument, meaning `charlie` wants `bob` to commit to the channel too. Find `charlie`'s `lncli` terminal and run:
+Lets's create `charlie`<--->`bob` now, and this time we're going to add the `--push_amt` argument, meaning `charlie` gives `bob` some of his own funds in the newly created channel. Find `charlie`'s `lncli` terminal and run:
 
     lncli --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon openchannel --node_key=<BOB_PUBKEY> --local_amt=800000 --push_amt=200000
 
