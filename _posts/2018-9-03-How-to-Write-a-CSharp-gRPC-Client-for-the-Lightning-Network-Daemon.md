@@ -1,6 +1,6 @@
-In this turorial we are going to explore the 'lnd' grpc interface.
+In this tutorial we are going to explore the `lnd` grpc interface.
 
-We've created our own in the previous tutorial [here](/Generate-a-CSharp-gRPC-Interface-for-lnd/), but you also search [nuget](https://www.nuget.org/packages?q=lnrpc) for existing libraries. 
+We've created our own in the previous tutorial [here](/Generate-a-CSharp-gRPC-Interface-for-lnd/), but you can also search [nuget](https://www.nuget.org/packages?q=lnrpc) for existing libraries. 
 
 
 
@@ -37,7 +37,7 @@ is at the default `localhost:10009`, with an open channel between the two nodes.
 
 #### Simple RPC
 
-```C#
+```c#
 // Retrieve and display the wallet balance
 var response = client.WalletBalance(new WalletBalanceRequest());
 Console.WriteLine(response);
@@ -45,7 +45,7 @@ Console.WriteLine(response);
 
 #### Response-streaming RPC
 
-```python
+```c#
 request = ln.InvoiceSubscription()
 for invoice in stub.SubscribeInvoices(request):
     print(invoice)
@@ -67,7 +67,7 @@ invoice.
 
 #### Bidirectional-streaming RPC
 
-```python
+```c#
 from time import sleep
 import codecs
 
@@ -100,7 +100,7 @@ This example will send a payment of 100 satoshis every 2 seconds.
 
 To authenticate using macaroons you need to include the macaroon in the metadata of the request.
 
-```python
+```c#
 import codecs
 
 # Lnd admin macaroon is at ~/.lnd/data/chain/bitcoin/simnet/admin.macaroon on Linux and
@@ -112,13 +112,13 @@ with open(os.path.expanduser('~/.lnd/data/chain/bitcoin/simnet/admin.macaroon'),
 
 The simplest approach to use the macaroon is to include the metadata in each request as shown below.
 
-```python
+```c#
 stub.GetInfo(ln.GetInfoRequest(), metadata=[('macaroon', macaroon)])
 ```
 
 However, this can get tiresome to do for each request, so to avoid explicitly including the macaroon we can update the credentials to include it automatically.
 
-```python
+```c#
 def metadata_callback(context, callback):
     # for more info see grpc docs
     callback([('macaroon', macaroon)], None)
@@ -155,4 +155,4 @@ details around how to drive `gRPC` from C#.
 
 
 ### Next Steps
-I dunno, none planned
+You should now be able to start creating your own apps using the gRPC interface!
