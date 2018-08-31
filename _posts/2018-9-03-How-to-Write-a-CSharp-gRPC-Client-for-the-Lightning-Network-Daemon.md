@@ -9,7 +9,7 @@ We've created our own in the previous tutorial [here](/Generate-a-CSharp-gRPC-In
 Every time you use C# gRPC, you will have to import the generated rpc classes
 and set up a channel and client to your connect to your `lnd` node:
 
-```python
+```c#
 
 using Grpc.Core;
 using Lnrpc;
