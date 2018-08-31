@@ -1,6 +1,6 @@
 In this turorial we are going to explore the 'lnd' grpc interface.
 
-We've created our own in the previous tutorial [here](Generate-a-C#-gRPC-Interface-for-lnd), but you also search [nuget](https://www.nuget.org/packages?q=lnrpc) for existing libraries. 
+We've created our own in the previous tutorial [here](/Generate-a-CSharp-gRPC-Interface-for-lnd/), but you also search [nuget](https://www.nuget.org/packages?q=lnrpc) for existing libraries. 
 
 
 
@@ -9,118 +9,18 @@ We've created our own in the previous tutorial [here](Generate-a-C#-gRPC-Interfa
 Every time you use C# gRPC, you will have to import the generated rpc classes
 and set up a channel and client to your connect to your `lnd` node:
 
-```Csharp
+```python
 
 using Grpc.Core;
 using Lnrpc;
 ...
-
-# Due to updated ECDSA generated tls.cert we need to let gprc know that
-# we need to use that cipher suite otherwise there will be a handshake
-# error when we communicate with the lnd rpc server.
+// Due to updated ECDSA generated tls.cert we need to let gprc know that
+// we need to use that cipher suite otherwise there will be a handshake
+// error when we communicate with the lnd rpc server.
 System.Environment.SetEnvironmentVariable("GRPC_SSL_CIPHER_SUITES", "HIGH+ECDSA");
             
-# Lnd cert is at AppData\Local\Lnd\tls.cert on Windows
-var cert = File.ReadAllText(<Tls_Cert_Location>);
-
-var sslCreds = new SslCredentials(cert);
-var channel = new Grpc.Core.Channel("localhost:10009", sslCreds);
-var client = new Lnrpc.Lightning.LightningClient(channel);
-
-```
-
-```CSharp
-
-using Grpc.Core;
-using Lnrpc;
-...
-
-# Due to updated ECDSA generated tls.cert we need to let gprc know that
-# we need to use that cipher suite otherwise there will be a handshake
-# error when we communicate with the lnd rpc server.
-System.Environment.SetEnvironmentVariable("GRPC_SSL_CIPHER_SUITES", "HIGH+ECDSA");
-            
-# Lnd cert is at AppData\Local\Lnd\tls.cert on Windows
-var cert = File.ReadAllText(<Tls_Cert_Location>);
-
-var sslCreds = new SslCredentials(cert);
-var channel = new Grpc.Core.Channel("localhost:10009", sslCreds);
-var client = new Lnrpc.Lightning.LightningClient(channel);
-
-```
-
-```C#
-
-using Grpc.Core;
-using Lnrpc;
-...
-
-# Due to updated ECDSA generated tls.cert we need to let gprc know that
-# we need to use that cipher suite otherwise there will be a handshake
-# error when we communicate with the lnd rpc server.
-System.Environment.SetEnvironmentVariable("GRPC_SSL_CIPHER_SUITES", "HIGH+ECDSA");
-            
-# Lnd cert is at AppData\Local\Lnd\tls.cert on Windows
-var cert = File.ReadAllText(<Tls_Cert_Location>);
-
-var sslCreds = new SslCredentials(cert);
-var channel = new Grpc.Core.Channel("localhost:10009", sslCreds);
-var client = new Lnrpc.Lightning.LightningClient(channel);
-
-```
-
-```Java
-
-using Grpc.Core;
-using Lnrpc;
-...
-
-# Due to updated ECDSA generated tls.cert we need to let gprc know that
-# we need to use that cipher suite otherwise there will be a handshake
-# error when we communicate with the lnd rpc server.
-System.Environment.SetEnvironmentVariable("GRPC_SSL_CIPHER_SUITES", "HIGH+ECDSA");
-            
-# Lnd cert is at AppData\Local\Lnd\tls.cert on Windows
-var cert = File.ReadAllText(<Tls_Cert_Location>);
-
-var sslCreds = new SslCredentials(cert);
-var channel = new Grpc.Core.Channel("localhost:10009", sslCreds);
-var client = new Lnrpc.Lightning.LightningClient(channel);
-
-```
-
-```C
-
-using Grpc.Core;
-using Lnrpc;
-...
-
-# Due to updated ECDSA generated tls.cert we need to let gprc know that
-# we need to use that cipher suite otherwise there will be a handshake
-# error when we communicate with the lnd rpc server.
-System.Environment.SetEnvironmentVariable("GRPC_SSL_CIPHER_SUITES", "HIGH+ECDSA");
-            
-# Lnd cert is at AppData\Local\Lnd\tls.cert on Windows
-var cert = File.ReadAllText(<Tls_Cert_Location>);
-
-var sslCreds = new SslCredentials(cert);
-var channel = new Grpc.Core.Channel("localhost:10009", sslCreds);
-var client = new Lnrpc.Lightning.LightningClient(channel);
-
-```
-
-```C++
-
-using Grpc.Core;
-using Lnrpc;
-...
-
-# Due to updated ECDSA generated tls.cert we need to let gprc know that
-# we need to use that cipher suite otherwise there will be a handshake
-# error when we communicate with the lnd rpc server.
-System.Environment.SetEnvironmentVariable("GRPC_SSL_CIPHER_SUITES", "HIGH+ECDSA");
-            
-# Lnd cert is at AppData\Local\Lnd\tls.cert on Windows
+// Lnd cert is at AppData\Local\Lnd\tls.cert on Windows
+// ~/.lnd/tls.cert on Linux and ~/Library/Application Support/Lnd/tls.cert on Mac
 var cert = File.ReadAllText(<Tls_Cert_Location>);
 
 var sslCreds = new SslCredentials(cert);
