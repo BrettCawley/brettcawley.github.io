@@ -1,19 +1,22 @@
-In this tutorial we are going to explore the `lnd` grpc interface.
+In this tutorial we are going to explore the `lnd` `gRPC` interface.
 
-We've created our own in the previous tutorial [here](/Generate-a-CSharp-gRPC-Interface-for-lnd/), but you can also search [nuget](https://www.nuget.org/packages?q=lnrpc) for existing libraries. 
+In the [previous tutorial](/Generate-a-CSharp-gRPC-Interface-for-lnd/) we learned how to manually generate the `gRPC` interface which is need to interact with `lnd`. If you didn't follow that tutorial there is no need to worry, as any of the packages on [nuget](https://www.nuget.org/packages?q=lnrpc) can be used as an alternative to importing the files.
 
+First, go ahead and create a regular console application in [Visual Studio](https://visualstudio.microsoft.com/vs/community/). Next, you can either add the manually generated files to the project, or import one of the previously mentioned nuget packages.
 
 
 #### Imports and Client
 
-Every time you use C# gRPC, you will have to import the generated rpc classes
-and set up a channel and client to your connect to your `lnd` node:
+Every time you use C# `gRPC`, you will have to import the generated rpc classes, and use `nuget` package manger to install `Grpc.Core`, `Google.Protobuf`, and `Google.Api.CommonProtos`.
+
+Now use the code below to set up a channel and client to connect to your `lnd` node:
 
 ```c#
 
 using Grpc.Core;
 using Lnrpc;
 ...
+
 // Due to updated ECDSA generated tls.cert we need to let gprc know that
 // we need to use that cipher suite otherwise there will be a handshake
 // error when we communicate with the lnd rpc server.
@@ -31,7 +34,7 @@ var client = new Lnrpc.Lightning.LightningClient(channel);
 
 ### Examples
 
-Let's walk through some examples of C# gRPC clients. These examples assume
+Let's walk through some examples of C# `gRPC` clients. These examples assume
 that you have at least two `lnd` nodes running, the RPC location of one of which
 is at the default `localhost:10009`, with an open channel between the two nodes.
 
@@ -39,6 +42,7 @@ is at the default `localhost:10009`, with an open channel between the two nodes.
 
 ```c#
 // Retrieve and display the wallet balance
+// Use "WalletBalanceAsync" if in async context
 var response = client.WalletBalance(new WalletBalanceRequest());
 Console.WriteLine(response);
 ```
@@ -46,9 +50,15 @@ Console.WriteLine(response);
 #### Response-streaming RPC
 
 ```c#
-request = ln.InvoiceSubscription()
-for invoice in stub.SubscribeInvoices(request):
-    print(invoice)
+var request = new InvoiceSubscription();
+using (var call = client.SubscribeInvoices(request))
+{
+    while (await call.ResponseStream.MoveNext())
+    {
+        var invoice = call.ResponseStream.Current;
+        Console.WriteLine(invoice.ToString());
+    }
+}
 ```
 
 Now, create an invoice for your node at `localhost:10009`and send a payment to
@@ -62,37 +72,45 @@ $ lncli addinvoice --amt=100
 $ lncli sendpayment --pay_req=<PAY_REQ>
 ```
 
-Your console should now display the details of the recently satisfied
-invoice.
+Your console should now display the details of the recently satisfied invoice.
 
 #### Bidirectional-streaming RPC
 
 ```c#
-from time import sleep
-import codecs
+using (var call = client.SendPayment())
+{
+    var responseReaderTask = Task.Run(async () =>
+    {
+        while (await call.ResponseStream.MoveNext())
+        {
+            var payment = call.ResponseStream.Current;
+            Console.WriteLine(payment.ToString());
+        }
+    });
 
-def request_generator(dest, amt):
-      # Initialization code here
-      counter = 0
-      print("Starting up")
-      while True:
-          request = ln.SendRequest(
-              dest=dest,
-              amt=amt,
-          )
-          yield request
-          # Alter parameters here
-          counter += 1
-          sleep(2)
+    foreach (SendRequest sendRequest in SendPayment())
+    {
+        await call.RequestStream.WriteAsync(sendRequest);
+    }
+    await call.RequestStream.CompleteAsync();
+    await responseReaderTask;
+}
 
-# Outputs from lncli are hex-encoded
-dest_hex = <RECEIVER_ID_PUBKEY>
-dest_bytes = codecs.decode(dest_hex, 'hex')
 
-request_iterable = request_generator(dest=dest_bytes, amt=100)
-
-for payment in stub.SendPayment(request_iterable):
-    print(payment)
+IEnumerable<SendRequest> SendPayment()
+{
+    while (true)
+    {
+        SendRequest request = new SendRequest() {
+            DestString = "<DEST_PUB_KEY>",
+            Amt = 100,
+            PaymentHashString = "<R_HASH>",
+            FinalCltvDelta = "<CLTV_DELTA>"
+        };
+        yield return request;
+        System.Threading.Thread.Sleep(2000);
+    }
+}
 ```
 This example will send a payment of 100 satoshis every 2 seconds.
 
@@ -155,4 +173,4 @@ details around how to drive `gRPC` from C#.
 
 
 ### Next Steps
-You should now be able to start creating your own apps using the gRPC interface!
+You should now be able to start creating your own apps using the `gRPC` interface!
