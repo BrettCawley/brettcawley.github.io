@@ -256,4 +256,4 @@ lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon listchannel
 And we're done! We've successfully routed Bitcoin on a local lightning network!
 
 ### Next Steps
-It may also be useful to learn to [close channels](https://api.lightning.community/#closechannel), but in the mean time hold tight until I write how to create a web app using lightning simnet.
+It may also be useful to learn to [close channels](https://api.lightning.community/#closechannel), but the next tutorial is how to [create a gRPC interface](/Generate-a-CSharp-gRPC-Interface-for-lnd/) so we can communicate with `lnd` through our own apps.

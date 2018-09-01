@@ -1,10 +1,10 @@
 gRPC is an RPC library from Google, whose aim is to be more efficient than JSON/HTTP. Intended as an alternative to REST, it is more efficient due to it's use of Protocol Buffers and HTTP/2.
 
-If you don't wish to build the `lnd` interface definition yourself, you can install one from [nuget](https://www.nuget.org/packages?q=lnrpc), and continue on to the next tutorial [here]().
+If you don't wish to build the `lnd` interface definition yourself, you can install one from [nuget](https://www.nuget.org/packages?q=lnrpc), and continue on to the next tutorial [here](/How-to-Write-a-CSharp-gRPC-Client-for-the-Lightning-Network-Daemon/).
 
  In order to create a gRPC interface, you define a `Message` (the data structure used in the request) and a `Service` (the end point definition). These definitions are created in a `.proto` file, and looks like the following:
 
-```C
+```go
 syntax = "proto3";
 
 package lnrpc;
@@ -79,5 +79,5 @@ After following these steps, two files `Rpc.cs` and `RpcGrpc.cs` will be generat
 
 ### Further steps
 
-Go to the next tutorial to create a console app
+Continue on to the [next tutorial](/How-to-Write-a-CSharp-gRPC-Client-for-the-Lightning-Network-Daemon/), which explains how to use the files we just generated.
 
