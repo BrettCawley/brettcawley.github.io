@@ -1,6 +1,6 @@
-I found the official `lnd` confusing to install being a Windows user, so here is the quick version!
+I found `lnd` confusing to install as a Windows user, so here is a tutorial which should be a bit quicker!
 
-This tutorial is heavily influenced by [dev.lightning.community/guides/installation/](https://dev.lightning.community/guides/installation/). Let's get started!
+This tutorial is heavily influenced by the official guide found at [dev.lightning.community/guides/installation](https://dev.lightning.community/guides/installation/). Let's get started.
 
 ### Download tools
 * [Install git for windows](https://git-scm.com/download/win) and accept all defaults. Go needs git to pull source code from github. 
@@ -36,7 +36,7 @@ go install . ./cmd/...
 Run `btcd --help` to test it works.
 
 ### Installing lnd
-Now we need to install `lnd` from source, so let's get the latest code and install:
+Now we need to install `lnd` from source. The version at time of writing is `0.4.2`:
 
 ```bash
 go get -d github.com/lightningnetwork/lnd

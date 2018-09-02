@@ -1,6 +1,6 @@
-`gRPC` is an RPC framework from Google, whose aim is to be more efficient than JSON/HTTP. Intended as an alternative to REST, it is more efficient due to it's use of Protocol Buffers and HTTP/2.
+`gRPC` is an RPC framework from Google, whose aim is to be more efficient than JSON/HTTP. Intended as an alternative to REST, it is more efficient due to the use of Protocol Buffers and HTTP/2.
 
-If you don't wish to learn how to build the `lnd` interface definition, you can install one from [nuget](https://www.nuget.org/packages?q=lnrpc), and continue on to the next tutorial [here](/How-to-Write-a-CSharp-gRPC-Client-for-the-Lightning-Network-Daemon/). Otherwise, let's continue!
+If you don't wish to learn how to build a `gRPC` interface for `lnd`, you can install one from [nuget](https://www.nuget.org/packages?q=lnrpc) and continue on to the next tutorial [here](/How-to-Write-a-CSharp-gRPC-Client-for-the-Lightning-Network-Daemon/). Otherwise, let's continue!
 
  In order to create a `gRPC` interface, you define a `Service` (end point definition), and both a request and response `Message`. These definitions are created in a `.proto` file, which will be used to  generate the classes used in your chosen programming language.  An example `.proto` file looks like the following:
 
@@ -50,7 +50,7 @@ curl -o nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
 
 * `cd` to the location of the `protoc.exe` tool:  (note the version name in the folder)
 ```bash
-cd Grpc.Tools.X.XX.X\tools\windows_x86
+cd Grpc.Tools.X.XX.X/tools/windows_x86
 ```
 
 * Copy the lnd [rpc.proto](https://github.com/lightningnetwork/lnd/blob/master/lnrpc/rpc.proto) file:

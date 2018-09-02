@@ -2,7 +2,7 @@ In this tutorial, we're going to create a local lightning network (on simnet), a
 
 This tutorial is heavily influenced by [dev.lightning.community/tutorial/01-lncli/](https://dev.lightning.community/tutorial/01-lncli/index.html). I suggest you read over this first to get a quick overview, as I will be skipping a lot of the background information in order to keep this short.
 
-This assumes you have a functioning `lnd` and `btcd` install from the previous turorial [here](/Install-Lightning-On-Windows/).
+This assumes you have a functioning `lnd` and `btcd` install from the previous tutorial [here](/Install-Lightning-On-Windows/).
  
  Let's start by creating directories for our users. Open powershell (yes powershell) and run the following:
 
