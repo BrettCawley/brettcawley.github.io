@@ -2,14 +2,30 @@ In this tutorial we are going to explore the `lnd` `gRPC` interface.
 
 In the [previous tutorial](/Generate-a-CSharp-gRPC-Interface-for-lnd/) we learned how to manually generate the `gRPC` interface which is need to interact with `lnd`. If you didn't follow that tutorial there is no need to worry, as any of the packages on [nuget](https://www.nuget.org/packages?q=lnrpc) can be used as an alternative to importing the files.
 
-First, go ahead and create a regular console application in [Visual Studio](https://visualstudio.microsoft.com/vs/community/). Next, you can either add the manually generated files to the project, or import one of the previously mentioned nuget packages.
+First, go ahead and create a regular console application in [Visual Studio](https://visualstudio.microsoft.com/vs/community/). As we're using some async methods in the following examples, we need to replace the entire `Main` method with the following:
+
+```c#
+static void Main(string[] args)
+{
+    MainAsync(args).Wait();
+}
+
+static async Task MainAsync(string[] args)
+{
+    // code goes in here
+}
+
+```
+
+
+ Next, you need to add the manually generated C# `gRPC` files to the project, or import one of the previously mentioned nuget packages.
 
 
 #### Imports and Client
 
 Every time you use C# `gRPC`, you will have to import the generated rpc classes, and use `nuget` package manger to install `Grpc.Core`, `Google.Protobuf`, and `Google.Api.CommonProtos`.
 
-Now use the code below to set up a channel and client to connect to your `lnd` node:
+After installing these, use the code below to set up a channel and client to connect to your `lnd` node:
 
 ```c#
 
@@ -119,7 +135,7 @@ This example will send a payment of 100 satoshis every 2 seconds.
 To authenticate using macaroons you need to include the macaroon in the metadata of the request.
 
 ```c#
-// Lnd admin macaroon is at <LND_DIR>/data/chain/bitcoin/simnet/admin.macaroon on windows
+// Lnd admin macaroon is at <LND_DIR>/data/chain/bitcoin/simnet/admin.macaroon on Windows
 // ~/.lnd/data/chain/bitcoin/simnet/admin.macaroon on Linux and ~/Library/Application Support/Lnd/data/chain/bitcoin/simnet/admin.macaroon on Mac
 byte[] macaroonBytes = File.ReadAllBytes("<LND_DIR>/data/chain/bitcoin/simnet/admin.macaroon");
 var macaroon = BitConverter.ToString(macaroonBytes).Replace("-", ""); // hex format stripped of "-" chars
@@ -137,8 +153,8 @@ However, this can get tiresome to do for each request, so to avoid explicitly in
 // build ssl credentials using the cert the same as before
 var sslCreds = new SslCredentials(cert);
 
-// combine the cert credentials and the macaroon auth credentials
-// such that every call is properly encrypted and authenticated
+// combine the cert credentials and the macaroon auth credentials using interceptors
+// so every call is properly encrypted and authenticated
 Task AddMacaroon(AuthInterceptorContext context, Metadata metadata)
 {
     metadata.Add(new Metadata.Entry("macaroon", macaroon));
