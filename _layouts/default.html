@@ -9,7 +9,10 @@
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css" />
+    <!--critical css-->
+    <style>
+      body{color:#202020}
+    </style>
     <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}" href="{{ site.baseurl }}/feed.xml" />
 
     {% seo %}
@@ -46,7 +49,7 @@
         </footer>
       </div>
     </div>
-
+    {% include defer-css.html %}
     {% include analytics.html %}
   </body>
 </html>
