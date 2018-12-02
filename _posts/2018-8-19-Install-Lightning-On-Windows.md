@@ -4,12 +4,12 @@ This tutorial is heavily influenced by the official guide found at [dev.lightnin
 
 ### Download tools
 * [Install git for windows](https://git-scm.com/download/win) and accept all defaults. Go needs git to pull source code from github. 
-* [Install Go](https://golang.org/dl/) and accept all defaults. `lnd` is written in Go and this is needed to compile from source. Version at time of writing is 1.10.3.
+* [Install Go](https://golang.org/dl/) and accept all defaults. `lnd` is written in Go and this is needed to compile from source. Version at time of writing is `1.11.2`.
 * [Install Cygwin](https://www.cygwin.com/) **important** install *"make"* from the *"devel"* package. Cygwin is a unix-like terminal for Windows.
 
 
 ### Setup Tools
-We use `dep` to manage dependencies, so open up a new cygwin terminal and run the following: Wait for it to finish installing.
+We use `dep` to manage dependencies, so open up a new cygwin terminal and run the following: (It will take a short amount of time, so wait for it to finish installing)
 
 ```bash
 go get -u github.com/golang/dep/cmd/dep
@@ -36,7 +36,7 @@ go install . ./cmd/...
 Run `btcd --help` to test it works.
 
 ### Installing lnd
-Now we need to install `lnd` from source. The version at time of writing is `0.4.2`:
+Now we need to install `lnd` from source. The version at time of writing is `0.5.1`:
 
 ```bash
 go get -d github.com/lightningnetwork/lnd
@@ -49,3 +49,5 @@ Run `lnd --help` to test it works.
 ### Next Steps
 
 [Part 2](/Create-A-Local-Lightning-Network-On-Simnet) in this series of tutorials walks through creating a local lightning network using simnet. Check it out!
+
+*Original tutorial updated to support lnd 0.5.1*

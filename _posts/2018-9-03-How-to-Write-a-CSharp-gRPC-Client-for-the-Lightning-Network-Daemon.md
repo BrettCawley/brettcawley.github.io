@@ -121,7 +121,7 @@ IEnumerable<SendRequest> SendPayment()
             DestString = "<DEST_PUB_KEY>",
             Amt = 100,
             PaymentHashString = "<R_HASH>",
-            FinalCltvDelta = "<CLTV_DELTA>"
+            FinalCltvDelta = 144
         };
         yield return request;
         System.Threading.Thread.Sleep(2000);
