@@ -23,12 +23,14 @@ static async Task MainAsync(string[] args)
 
 #### Imports and Client
 
-Every time you use C# `gRPC`, you will have to import the generated rpc classes, and use `nuget` package manger to install `Grpc.Core`, `Google.Protobuf`, and `Google.Api.CommonProtos`.
+Every time you use C# `gRPC`, you will have to import the generated rpc classes, and use `nuget` package manger to install `Grpc.Core` (1.17.0 at time of writing), `Google.Protobuf` (3.6.1), and `Google.Api.CommonProtos` (1.4.0).
 
 After installing these, use the code below to set up a channel and client to connect to your `lnd` node:
 
 ```c#
-
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using Grpc.Core;
 using Lnrpc;
 ...
@@ -117,13 +119,13 @@ IEnumerable<SendRequest> SendPayment()
 {
     while (true)
     {
-        SendRequest request = new SendRequest() {
-            DestString = "<DEST_PUB_KEY>",
+        SendRequest req = new SendRequest() {
+            DestString = <DEST_PUB_KEY>,
             Amt = 100,
-            PaymentHashString = "<R_HASH>",
+            PaymentHashString = <R_HASH>,
             FinalCltvDelta = 144
         };
-        yield return request;
+        yield return req;
         System.Threading.Thread.Sleep(2000);
     }
 }
@@ -168,7 +170,7 @@ var channel = new Grpc.Core.Channel("localhost:10009", combinedCreds);
 var client = new Lnrpc.Lightning.LightningClient(channel);
 
 // now every call will be made with the macaroon already included
-client.GetInfo(new GetInfoRequest())
+client.GetInfo(new GetInfoRequest());
 ```
 
 

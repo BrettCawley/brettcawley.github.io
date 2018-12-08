@@ -30,59 +30,52 @@ message UnlockWalletResponse {}
 
 `lnd` uses the `gRPC` protocol for communication with clients like `lncli`.
 
-`gRPC` is based on protocol buffers, and as such, you will need to compile
-the `lnd` proto file in C# before you can use it to communicate with `lnd`.
+`gRPC` is based on protocol buffers, and as such, you will need to compile the `lnd` proto file in C# before you can use it to communicate with `lnd`.
 
 This assumes you are using a Windows machine, but it applies equally to Mac and Linux.
 
-* Open a `Cygwin` terminal and create a folder to work in:
+* Open Visual Studio, and create a new `.net core` console application called `lnrpc` at the root directory (Windows : `C:/`)
+
+* Within Visual Studio, open nuget package manager and install `Grpc.Tools` (1.17.0 at time of writing)
+
+* Open a `Cygwin` terminal and cd to your project folder:
 ```bash
-cd C:/users/<YOUR_USER>/desktop
-mkdir lnrpc
-cd lnrpc
+cd C:/lnrpc/lnrpc
 ```
 
-* Fetch the `nuget` executable (Windows is used in this example), then install the `Grpc.Tools` package:
-```bash    
-curl -o nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-./nuget install Grpc.Tools
-```
-
-* `cd` to the location of the `protoc.exe` tool:  (note the version name in the folder)
+* Create the necessary folder structure, and then fetch the lnd [rpc.proto](https://github.com/lightningnetwork/lnd/blob/master/lnrpc/rpc.proto) file:
 ```bash
-## replace with linux_x86 or macosx_x86 depending on your OS
-cd Grpc.Tools.X.XX.X/tools/windows_x86
-```
-
-* Copy the lnd [rpc.proto](https://github.com/lightningnetwork/lnd/blob/master/lnrpc/rpc.proto) file:
-```bash
-curl -o rpc.proto -s https://raw.githubusercontent.com/lightningnetwork/lnd/master/lnrpc/rpc.proto
+mkdir Grpc
+curl -o Grpc/rpc.proto -s https://raw.githubusercontent.com/lightningnetwork/lnd/master/lnrpc/rpc.proto
 ```
 
 * Copy Google's [annotations.proto](https://github.com/googleapis/googleapis/blob/master/google/api/annotations.proto) to the correct folder:
 ```bash
-mkdir google
-mkdir google/api
-curl -o google/api/annotations.proto -s https://raw.githubusercontent.com/googleapis/googleapis/master/google/api/annotations.proto
+mkdir Grpc/google
+mkdir Grpc/google/api
+curl -o Grpc/google/api/annotations.proto -s https://raw.githubusercontent.com/googleapis/googleapis/master/google/api/annotations.proto
 ```
 
 * Copy Google's [http.proto](https://github.com/googleapis/googleapis/blob/master/google/api/http.proto) to the correct folder:
 ```bash
-curl -o google/api/http.proto -s https://raw.githubusercontent.com/googleapis/googleapis/master/google/api/http.proto
+curl -o Grpc/google/api/http.proto -s https://raw.githubusercontent.com/googleapis/googleapis/master/google/api/http.proto
 ```
 
 * Copy Google's [descriptor.proto](https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto) to the correct folder:
 ```bash
-mkdir google/protobuf
-curl -o google/protobuf/descriptor.proto -s https://raw.githubusercontent.com/protocolbuffers/protobuf/master/src/google/protobuf/descriptor.proto
+mkdir Grpc/google/protobuf
+curl -o Grpc/google/protobuf/descriptor.proto -s https://raw.githubusercontent.com/protocolbuffers/protobuf/master/src/google/protobuf/descriptor.proto
 ```
 
-* Compile the proto file:
+* Compile the proto file using `protoc.exe` from nuget package `Grpc.Tools` (remember to replace "<YOUR_USER>", and possibly version "1.17.0" in both paths):
 ```bash
-./protoc.exe --csharp_out ../../../ --grpc_out ../../../ rpc.proto --plugin=protoc-gen-grpc=grpc_csharp_plugin.exe
+# linux + mac nuget package location: ~/.nuget/packages
+cd Grpc
+C:/Users/<YOUR_USER>/.nuget/packages/grpc.tools/1.17.0/tools/windows_x64/protoc.exe --csharp_out . --grpc_out . rpc.proto --plugin=protoc-gen-grpc=C:/Users/<YOUR_USER>/.nuget/packages/grpc.tools/1.17.0/tools/windows_x64/grpc_csharp_plugin.exe
 ```
 
-After following these steps, two files `Rpc.cs` and `RpcGrpc.cs` will be generated in the base of your folder. These files will need to be imported in your project any time you use C# `gRPC`.
+
+After following these steps, two files `Rpc.cs` and `RpcGrpc.cs` will be generated in the `Grpc` folder in your project.
 
 
 ### Further steps
