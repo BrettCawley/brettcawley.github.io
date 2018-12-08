@@ -67,7 +67,7 @@ mkdir Grpc/google/protobuf
 curl -o Grpc/google/protobuf/descriptor.proto -s https://raw.githubusercontent.com/protocolbuffers/protobuf/master/src/google/protobuf/descriptor.proto
 ```
 
-* Compile the proto file using `protoc.exe` from nuget package `Grpc.Tools` (remember to replace "<YOUR_USER>", and possibly version "1.17.0" in both paths):
+* Compile the proto file using `protoc.exe` from nuget package `Grpc.Tools` (remember to replace "YOUR_USER", and possibly version "1.17.0" in both paths):
 ```bash
 # linux + mac nuget package location: ~/.nuget/packages
 cd Grpc
