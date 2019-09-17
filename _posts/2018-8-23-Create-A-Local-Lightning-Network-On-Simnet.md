@@ -130,7 +130,7 @@ lncli --rpcserver=localhost:10001 --macaroonpath=data/chain/bitcoin/simnet/admin
 
 and close the terminal.
 
->Is the wallet balance reporting as 0, even though the command ran successfully? If not, great! ignore the rest of this message. If so, perhaps try restarting then unlocking lnd. Find alice's lnd terminal, cancel it (Ctrl+C), Then restart back up at the [**"Creating Our Lightning Nodes"**](#Create-Lightning-Node) section. In the subsequent step, unlock lnd by calling lncli using the **unlock** argument, not create. After successfully unlocking, come back here and try the wallet balance command again. If it still doesn't work, try to investigate using the getinfo command mentioned earlier.
+>Is the wallet balance reporting as 0, even though the command ran successfully? If not, great! ignore the rest of this message. If so, try running the `lncli walletbalance` command above a couple times. If it still reports balance 0, perhaps try restarting then unlocking lnd. Find alice's lnd terminal, cancel it (Ctrl+C), Then restart back up at the [**"Creating Our Lightning Nodes"**](#Create-Lightning-Node) section. In the subsequent step, unlock lnd by calling lncli using the **unlock** argument, not create. After successfully unlocking, come back here and try the wallet balance command again. If it still doesn't work, try to investigate using the getinfo command mentioned earlier.
 
 Lets do the same for `charlie` now. Find the terminal running `btcd`, cancel it by pressing `Ctrl+C` a couple of times, and set it to mine to `<CHARLIE_ADDRESS>`:
 
@@ -228,7 +228,7 @@ Now let's send the payment from `alice` to `bob` using `sendpayment`. Find `alic
 lncli --rpcserver=localhost:10001 --macaroonpath=data/chain/bitcoin/simnet/admin.macaroon sendpayment --pay_req=<encoded_invoice>
 ```
 
-Finally, still in `alice`'s `lncli` terminal, check the payment was sent by checking "remote_balance" was decremented:
+Finally, still in `alice`'s `lncli` terminal, check the payment was sent by checking "remote_balance" was incremented:
 
 ```bash
 lncli --rpcserver=localhost:10001 --macaroonpath=data/chain/bitcoin/simnet/admin.macaroon listchannels
@@ -258,4 +258,4 @@ And we're done! We've successfully routed Bitcoin on a local lightning network!
 ### Next Steps
 It may also be useful to learn to [close channels](https://api.lightning.community/#closechannel), but the next tutorial is how to [create a gRPC interface](/Generate-a-CSharp-gRPC-Interface-for-lnd/) so we can communicate with `lnd` through our own apps.
 
-*Original tutorial updated to support lnd 0.5.1*
+*Original tutorial updated to support lnd 0.7.1*
